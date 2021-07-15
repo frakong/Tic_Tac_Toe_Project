@@ -1,0 +1,27 @@
+I intend for this program to be a simple Tic Tac Toe program. 
+When executing this program after compiling it, the user(s) should pass in 1 argument "dim", which is an integer that specifies how many rows/columns you want the board to be, resulting in a dim x dim board as the game board. This allows for the board to have any dimensions the user pleases, not just 3x3.
+When executing the program on the Linux command line, the program should start by printing out a welcome message. The program will assume there are 2 players. Player 1 will be assigned the 'X' piece, while player 2 will be assigned the 'O' piece. The "e" character (for empty) will be what is called the "empty character", used to denote empty spaces on the board (places on the board that don't yet contain an X or an O).
+By default, player 1 will go first. The game will display an empty board with row and column numbers to the left of each row and underneath each column Then, player 1 will be prompted to enter the row number, followed by a space, followed by the column number that he/she wants to insert the 'X' piece. After that, the board will be updated and displayed again. Then, player 2 will be prompted to enter the row number, followed by a space, followed by the column number that he/she wants to insert the 'O' piece. Then, the board will be updated, displayed again, and player 1 will be prompted again.
+This loop will continue until a tie occurs (when all the spaces of the board are filled and no one has won) or someone has won (there is a row/column/main diagonal of all Xs or Os).
+For now, I will assume the values and formats of all inputs passed in by the user are valid. In the future, I will drop this assumption and implement error checking.
+
+OUTLINE OF CODE:
+The main program is divided into 3 sections: Setting up the game, playing the game, and cleaning up the game.
+
+SETTING UP THE GAME:
+  1. Create the board (This will be dynamically allocated by reading in the "dim" argument the user(s) pass in when running the executable on the command line. The board will be initialized with each space containing the blank character 'e').
+  2. Get the 2 players (Done through an player pieces array where each index represents the player and the value of each index is the piece that player has).
+  3. Assign each player a piece (Player 1 will be assigned 'X', Player 2 will be assigned 'O').
+  4. Decide who goes first (for now, player 1 will go first. I may add a random generator in the future).
+
+PLAYING THE GAME:
+  1. Display the current state of the board.
+  2. Whoever's turn it is, prompt that player to make a move by inputting the row and column number they want their piece to go. Once again, I will assume the row and column numbers inputted are correct and within range for now.
+  3. Read in the move the player inputted. If that spot in the board is already taken, tell the player that and prompt the player for a move again.
+  4. Update the board to include that new move. 
+  5a. Check if there is a tie. There is a tie if the board has no more empty spaces and no one has won yet.
+  5b. Check if someone has won. A player has won if there is a row or column or a main diagonal (left or right) that is either filled with Xs or Os.
+  6. If there is a tie or someone has won, display the board and declare the results of the game (Which player won, or is it a tie?) If not, then change the player's turn and go back to step 1.
+
+CLEANING UP THE GAME:
+  1. Free the board and the array of player pieces from memory.

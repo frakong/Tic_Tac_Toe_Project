@@ -9,9 +9,9 @@ OUTLINE OF CODE:
 The main program is divided into 3 sections: Setting up the game, playing the game, and cleaning up the game.
 
 SETTING UP THE GAME:
-  1. Create the board (This will be dynamically allocated by reading in the "dim" argument the user(s) pass in when running the executable on the command line. The board will be initialized with each space containing the blank character 'e').
-  2. Get the 2 players (Done through an player pieces array where each index represents the player and the value of each index is the piece that player has).
-  3. Assign each player a piece (Player 1 will be assigned 'X', Player 2 will be assigned 'O').
+  1. Create the board (This will be dynamically allocated by reading in the "gameBoardSize" argument the user(s) pass in when running the executable on the command line. The board will be initialized with each space containing the blank character 'e').
+  2. Get the 2 players (Done through an game pieces array where each index represents the player and the value of each index is the piece that player has).
+  3. Assign each player a piece (Player 1 will be assigned 'X', Player 2 will be assigned 'O', through this steps 2 and 3 are accomplished simultaneously).
   4. Decide who goes first (for now, player 1 will go first. I may add a random generator in the future).
 
 PLAYING THE GAME:

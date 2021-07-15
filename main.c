@@ -7,9 +7,19 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include "setup_game.h"
+//#include "play_game.h"
+//#include "cleanup_game.h"
 
 int main(int argc, char** argv){
-  setup_game();
+  char** game_board;
+  char* game_pieces;
+  int game_board_size;
+  int current_turn;
+  char blank_character = 'e';
+  
+
+  setup_game(argc, argv, &game_board, &game_pieces, &game_board_size, &current_turn, blank_character);
   play_game();
   cleanup_game();
   return 0;

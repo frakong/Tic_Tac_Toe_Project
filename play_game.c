@@ -6,3 +6,13 @@
 #include <ctype.h>
 #include "play_game.h"
 
+void play_game(char*** game_board, char* game_pieces, int game_board_size, int* current_turn, char blank_character){
+  int moveRow, moveCol;
+  display_board();
+  do{
+    get_move_from_player();
+    update_board();
+    display_board();
+  } while (!is_game_over());
+  declare_results_of_game();
+}

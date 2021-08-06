@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include "setup_game.h"
-//#include "play_game.h"
+#include "play_game.h"
 //#include "cleanup_game.h"
 
 int main(int argc, char** argv){

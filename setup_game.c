@@ -42,3 +42,14 @@ void fetch_game_board_size(int argc, char** argv, int* game_board_size){
   }
 }
 
+char* get_players_and_pieces(){
+  char* player_pieces = calloc(2, sizeof(*player_pieces));
+  player_pieces[0] = 'X';
+  player_pieces[1] = 'O';
+  return player_pieces;
+}
+
+int get_which_player_goes_first(){
+  return 0;
+}
+

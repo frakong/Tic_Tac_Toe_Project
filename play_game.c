@@ -12,9 +12,9 @@ void play_game(char*** game_board, char* game_pieces, int game_board_size, int* 
   do{
     get_move_from_player(*game_board, game_board_size, *current_turn, &move_row, &move_col, blank_character);
     update_board(game_board, game_pieces, move_row, move_col, *current_turn);
-    change_turn();
+    change_turn(current_turn);
     display_board(*game_board, game_board_size);
-  } while (!is_game_over());
+  } while (!is_game_over(*game_board, game_board_size, blank_character));
   declare_results_of_game();
 }
 
@@ -71,4 +71,109 @@ bool in_range(int move_row, int move_col, int game_board_size){
 
 void update_board(char*** game_board, char* game_pieces, int move_row, int move_col, int current_turn){
   *game_board[move_row][move_col] = game_pieces[current_turn];
+}
+
+void change_turn(int* currentTurn){
+  if (*currentTurn == 0){
+    *currentTurn = 1;
+  }
+  else{
+    *currentTurn = 0;
+  }
+}
+
+bool is_game_over(char** game_board, int game_board_size, char blank_character){
+  if (someone_won(game_board, game_board_size, blank_character) || is_tie(game_board, game_board_size, blank_character)){
+    return true;
+  }
+  return false;
+}
+
+bool someone_won(char** game_board, int game_board_size, char blank_character){
+  if (won_row(game_board, game_board_size, blank_character) || won_column(game_board, game_board_size, blank_character) || won_diagonal(game_board, game_board_size, blank_character)){
+    return true;
+  }
+  return false;
+}
+
+bool won_row(char** game_board, int game_board_size, char blank_character){
+  for (int row_number = 0; row_number < game_board_size; row_number++){
+    if ((game_board[row_number][0] != blank_character) && all_same(game_board[row_number], game_board_size)){
+      return true;
+    }
+  }
+  return false;
+}
+
+bool won_col(char** game_board, int game_board_size, char blank_character){
+  char** transposed_game_board = transpose_board(game_board, game_board_size);
+  if (won_row(transposed_game_board, game_board_size, blank_character)){
+    return true;
+  }
+  return false;
+}
+
+bool all_same(char* row, int length_of_row){
+  for (int column = 0; column < length_of_row; column++){
+    if (row[column] != row[0]){
+      return false;
+    }
+  }
+  return true;
+}
+
+char** transpose_board(char** old_game_board, int game_board_size){
+  char** new_game_board = calloc(game_board_size, sizeof(*new_game_board));
+  for (int i = 0; i < game_board_size; i++){
+    new_game_board[i] = calloc(game_board_size, sizeof(*new_game_board[i]));
+    for (int j = 0; j < game_board_size; j++){
+      new_game_board[i][j] = old_game_board[j][i];
+    }
+  }
+  return new_game_board;
+}
+
+bool won_diagonal(char** game_board, int game_board_size, char blank_character){
+  if (won_left_diagonal(game_board, game_board_size, blank_character) || won_right_diagonal(game_board, game_board_size, blank_character)){
+    return true;
+  }
+  return false;
+}
+
+bool won_left_diagonal(char** game_board, int game_board_size, char blank_character){
+  if (game_board[0][0] == blank_character){
+    return false;
+  }
+  for (int position = 0; position < game_board_size; position++){
+    if (game_board[position][position] != game_board[0][0]){
+      return false;
+    }
+  }
+  return true;
+}
+
+bool won_right_diagonal(char** game_board, int game_board_size, char blank_character){
+  if (game_board[0][game_board_size-1] == blank_character){
+    return false;
+  }
+  for (int position = 0; position < game_board_size; position++){
+    if (game_board[position][game_board_size-position-1] != game_board[0][position]){
+      return false;
+    }
+  }
+  return true;
+}
+
+bool is_tie(char** game_board, int game_board_size, char blank_character){
+  if (someone_won(game_board, game_board_size, blank_character)){
+    return false;
+  }
+  for (int row = 0; row < game_board_size; row++){
+    for (int col = 0; col < game_board_size; col++){
+      if (game_board[row][col]== blank_character){
+        return false;
+      }
+    }
+  }
+  return true;
 }

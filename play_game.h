@@ -8,5 +8,16 @@
   bool spot_taken(char** game_board, int move_row, int move_col, int game_board_size, char blank_character);
   bool in_range(int move_row, int move_col, int game_board_size);
   void update_board(char*** game_board, char* game_pieces, int move_row, int move_col, int current_turn);
-
+  void change_turn(int* currentTurn);
+  bool is_game_over(char** board, int game_board_size, char blank_character);
+  bool someone_won(char** game_board, int game_board_size, char blank_character);
+  bool won_row(char** game_board, int game_board_size, char blank_character);
+  bool won_col(char** game_board, int game_board_size, char blank_character);
+  bool all_same(char* row, int length_of_row);
+  char** transpose_board(char** old_game_board, int game_board_size);
+  bool won_diagonal(char** game_board, int game_board_size, char blank_character);
+  bool won_left_diagonal(char** game_board, int game_board_size, char blank_character);
+  bool won_right_diagonal(char** game_board, int game_board_size, char blank_character);
+  bool is_tie(char** game_board, int game_board_size, char blank_character);
+  
 #endif

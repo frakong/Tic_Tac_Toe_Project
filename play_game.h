@@ -19,5 +19,5 @@
   bool won_left_diagonal(char** game_board, int game_board_size, char blank_character);
   bool won_right_diagonal(char** game_board, int game_board_size, char blank_character);
   bool is_tie(char** game_board, int game_board_size, char blank_character);
-  
+  void declare_results_of_game(char** game_board, int game_board_size, char blank_character, int current_turn);
 #endif

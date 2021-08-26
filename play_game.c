@@ -10,12 +10,12 @@ void play_game(char*** game_board, char* game_pieces, int game_board_size, int* 
   int move_row, move_col;
   displayWelcomeMessage(*game_board, game_board_size);
   do{
+    change_turn(current_turn);
     get_move_from_player(*game_board, game_board_size, *current_turn, &move_row, &move_col, blank_character);
     update_board(game_board, game_pieces, move_row, move_col, *current_turn);
-    change_turn(current_turn);
     display_board(*game_board, game_board_size);
   } while (!is_game_over(*game_board, game_board_size, blank_character));
-  declare_results_of_game();
+  declare_results_of_game(*game_board, game_board_size, blank_character, *current_turn);
 }
 
 void displayWelcomeMessage(char** game_board, int game_board_size){
@@ -176,4 +176,13 @@ bool is_tie(char** game_board, int game_board_size, char blank_character){
     }
   }
   return true;
+}
+
+void declare_results_of_game(char** game_board, int game_board_size, char blank_character, int current_turn){
+  if (is_tie(game_board, game_board_size, blank_character)){
+    printf("The game has ended in a tie. No one has won.");
+  }
+  else{
+    printf("Congratulations, player %d, you have won!", current_turn+1);
+  }
 }

@@ -103,6 +103,7 @@ bool is_game_over(char** game_board, int game_board_size, char blank_character){
   return false;
 }
 
+//There are 3 ways to win a game: Fill any row, column, or main diagonal (left or right) on the board with your pieces. This checks for all 3 cases.
 bool someone_won(char** game_board, int game_board_size, char blank_character){
   if (won_row(game_board, game_board_size, blank_character) || won_column(game_board, game_board_size, blank_character) || won_diagonal(game_board, game_board_size, blank_character)){
     return true;
@@ -110,6 +111,7 @@ bool someone_won(char** game_board, int game_board_size, char blank_character){
   return false;
 }
 
+//Checks each row of the game board by making sure that the first piece in any row is not a blank character and then checking to see if the other pieces on that row are the same as the first character.
 bool won_row(char** game_board, int game_board_size, char blank_character){
   for (int row_number = 0; row_number < game_board_size; row_number++){
     if ((game_board[row_number][0] != blank_character) && all_same(game_board[row_number], game_board_size)){
@@ -119,6 +121,7 @@ bool won_row(char** game_board, int game_board_size, char blank_character){
   return false;
 }
 
+//Checks each column of the game board by first transposing the board and then doing the same procedure as won_row.
 bool won_col(char** game_board, int game_board_size, char blank_character){
   char** transposed_game_board = transpose_board(game_board, game_board_size);
   if (won_row(transposed_game_board, game_board_size, blank_character)){
@@ -127,6 +130,7 @@ bool won_col(char** game_board, int game_board_size, char blank_character){
   return false;
 }
 
+//Checks whether all the elements in an array/row are equal to the first element in that array/row.
 bool all_same(char* row, int length_of_row){
   for (int column = 0; column < length_of_row; column++){
     if (row[column] != row[0]){
@@ -136,6 +140,7 @@ bool all_same(char* row, int length_of_row){
   return true;
 }
 
+//Transposes the old_game_board into new_game_board by switching the rows and columns of old_game_board(first column of old_game_board becomes new first row of new_game_board, etc.)
 char** transpose_board(char** old_game_board, int game_board_size){
   char** new_game_board = calloc(game_board_size, sizeof(*new_game_board));
   for (int i = 0; i < game_board_size; i++){
@@ -147,6 +152,7 @@ char** transpose_board(char** old_game_board, int game_board_size){
   return new_game_board;
 }
 
+//Simply checks to see whether someone has won by filling the main left or main right diagonal on the game board.
 bool won_diagonal(char** game_board, int game_board_size, char blank_character){
   if (won_left_diagonal(game_board, game_board_size, blank_character) || won_right_diagonal(game_board, game_board_size, blank_character)){
     return true;
@@ -154,6 +160,7 @@ bool won_diagonal(char** game_board, int game_board_size, char blank_character){
   return false;
 }
 
+//Checks to see whether someone has filled the main left diagonal of the board with their piece.
 bool won_left_diagonal(char** game_board, int game_board_size, char blank_character){
   if (game_board[0][0] == blank_character){
     return false;
@@ -166,18 +173,20 @@ bool won_left_diagonal(char** game_board, int game_board_size, char blank_charac
   return true;
 }
 
+//Checks to see whether someone has filled the right main diagonal of the board with their piece.
 bool won_right_diagonal(char** game_board, int game_board_size, char blank_character){
   if (game_board[0][game_board_size-1] == blank_character){
     return false;
   }
   for (int position = 0; position < game_board_size; position++){
-    if (game_board[position][game_board_size-position-1] != game_board[0][position]){
+    if (game_board[position][game_board_size-position-1] != game_board[0][game_board_size-1]){
       return false;
     }
   }
   return true;
 }
 
+//Checks to see whether there is a tie. This happens when all of the spots on the game board are no longer blank and no one has won yet.
 bool is_tie(char** game_board, int game_board_size, char blank_character){
   if (someone_won(game_board, game_board_size, blank_character)){
     return false;
@@ -192,6 +201,7 @@ bool is_tie(char** game_board, int game_board_size, char blank_character){
   return true;
 }
 
+//This function executes at the end of the game, just before cleanup. It prints a message to the screen congratulating the player who won or declaring a tie.
 void declare_results_of_game(char** game_board, int game_board_size, char blank_character, int current_turn){
   if (is_tie(game_board, game_board_size, blank_character)){
     printf("The game has ended in a tie. No one has won.");

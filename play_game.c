@@ -24,9 +24,9 @@ void play_game(char*** game_board, char* game_pieces, int game_board_size, int* 
 
 //Displays the initialized board and a welcome message to signify the beginning of the game.
 void displayWelcomeMessage(char** game_board, int game_board_size){
-  printf("Welcome! Let's begin the game!");
+  printf("Welcome! Let's begin the game!\n");
   display_board(game_board, game_board_size);
-  printf("Good luck!");
+  printf("Good luck!\n");
 }
 
 //Prints the current state of the board in grid format to the screen.
@@ -47,17 +47,17 @@ void display_board(char** game_board, int game_board_size){
 
 //Reads in input from player (in format: row# col#) and checks if this row/column is valid.
 void get_move_from_player(char** game_board, int game_board_size, int current_turn, int* move_row, int* move_col, char blank_character){
-  printf("Player %d, please type in your move in the following format: row# col#", current_turn+1);
-  printf("Remember, your row# and col# must be between 0 and %d", game_board_size-1);
+  printf("Player %d, please type in your move in the following format: row# col#\n", current_turn+1);
+  printf("Remember, your row# and col# must be between 0 and %d\n", game_board_size-1);
   do{
-    sscanf("%d %d", move_row, move_col);//No dereference because move_row and move_col were passed as pointers.
+    scanf("%d %d", move_row, move_col);//No dereference because move_row and move_col were passed as pointers.
     if (in_range(*move_row, *move_col, game_board_size)){
       if (spot_taken(game_board, *move_row, *move_col, game_board_size, blank_character)){
-        printf("That spot is already taken. Try again!");
+        printf("That spot is already taken. Try again!\n");
       }
     }
     else{
-      printf("That is not a valid move. Remeber, your row# and col# must be between 0 and %d. Try again!", game_board_size-1);
+      printf("That is not a valid move. Remember, your row# and col# must be between 0 and %d. Try again!", game_board_size-1);
     }
   } while((!in_range(*move_row, *move_col, game_board_size)) || (spot_taken(game_board, *move_row, *move_col, game_board_size, blank_character)));//Move must correspond to a currently empty spot on the board and be within the board (in range) to be valid.
 }
@@ -105,7 +105,7 @@ bool is_game_over(char** game_board, int game_board_size, char blank_character){
 
 //There are 3 ways to win a game: Fill any row, column, or main diagonal (left or right) on the board with your pieces. This checks for all 3 cases.
 bool someone_won(char** game_board, int game_board_size, char blank_character){
-  if (won_row(game_board, game_board_size, blank_character) || won_column(game_board, game_board_size, blank_character) || won_diagonal(game_board, game_board_size, blank_character)){
+  if (won_row(game_board, game_board_size, blank_character) || won_col(game_board, game_board_size, blank_character) || won_diagonal(game_board, game_board_size, blank_character)){
     return true;
   }
   return false;

@@ -45,8 +45,55 @@ void display_board(char** game_board, int game_board_size){
   printf("\n");
 }
 
-//Reads in input from player (in format: row# col#) and checks if this row/column is valid.
+//Reads in input from player (in format: row# col#) and calls is_move_valid to check if the move is valid.
 void get_move_from_player(char** game_board, int game_board_size, int current_turn, int* move_row, int* move_col, char blank_character){
+  int num_args_read;
+  printf("Player %d, please type in your move in the following format: row# col#\n", current_turn+1);
+  printf("Remember, your row# and col# must be between 0 and %d\n", game_board_size-1);
+  do{
+    num_args_read = scanf("%d %d", move_row, move_col);
+  } while(!is_move_valid(num_args_read, game_board, game_board_size, *move_row, *move_col, blank_character));
+}
+
+//Checks to see if the input the user typed in to make the move is of a valid format, then checks whether the spot on the board contains a blank character and whether the numbers entered in are within the size of the game board.
+bool is_move_valid(int num_args_read, char** game_board, int game_board_size, int move_row, int move_col, char blank_character){
+  if (isMoveFormatValid(num_args_read)){
+    if (spot_taken(game_board, move_row, move_col, game_board_size, blank_character)){
+      printf("That spot already has a player piece on it. Please choose a spot that contains the blank character (an 'e')\n");
+      return false;
+    }
+    if (!in_range(move_row, move_col, game_board_size)){
+      printf("The row and column number you entered is out of range of the size of the game board. Please make sure your row and column numbers are between 0 and %d\n", game_board_size-1);
+      return false;
+    }
+    return true;
+  }
+  else{
+    printf("The input you entered is not of a valid format. Remember, it must be of the following format: row# col#\n");
+    return false;
+  }
+}
+
+//makes sure the input move the user typed in has 2 arguments (a row and column number) and then checks to make sure there aren't any nonspace characters entered afterwards by reading to the newline character.
+bool isMoveFormatValid(int num_args_read){
+  bool num_args_correct = false;
+  bool all_spaces_after = true;
+  if (num_args_read == 2){
+      num_args_correct = true;
+  }
+  char next_character;
+  //read to the end of the line (newline character) to check for nonspace characters.
+  do{
+    scanf("%c", &next_character);
+    if (!isspace(next_character)){
+      all_spaces_after = false;
+    }
+  } while(next_character != '\n');
+  return num_args_correct && all_spaces_after;
+}
+
+//Reads in input from player (in format: row# col#) and checks if this row/column is valid.
+/*void get_move_from_player(char** game_board, int game_board_size, int current_turn, int* move_row, int* move_col, char blank_character){
   printf("Player %d, please type in your move in the following format: row# col#\n", current_turn+1);
   printf("Remember, your row# and col# must be between 0 and %d\n", game_board_size-1);
   do{
@@ -57,10 +104,10 @@ void get_move_from_player(char** game_board, int game_board_size, int current_tu
       }
     }
     else{
-      printf("That is not a valid move. Remember, your row# and col# must be between 0 and %d. Try again!", game_board_size-1);
+      printf("That is not a valid move. Remember, your row# and col# must be between 0 and %d. Try again!\n", game_board_size-1);
     }
   } while((!in_range(*move_row, *move_col, game_board_size)) || (spot_taken(game_board, *move_row, *move_col, game_board_size, blank_character)));//Move must correspond to a currently empty spot on the board and be within the board (in range) to be valid.
-}
+}*/
 
 //Checks if a certain row&column number on the game board already has an X or O on it.
 bool spot_taken(char** game_board, int move_row, int move_col, int game_board_size, char blank_character){

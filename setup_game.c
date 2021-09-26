@@ -29,14 +29,22 @@ char** create_board(int argc, char** argv, int* game_board_size, char blank_char
 //For now, this function will only check to make sure the user inputted one argument when he/she ran the program on the command line: The size of the board. It doesn't check whether this argument is a number or not, so in the future I plan on adding to this function to ensure more stringent error checking.
 void fetch_game_board_size(int argc, char** argv, int* game_board_size){
   if (argc == 2){
-    sscanf(argv[1], "%d", game_board_size);
-  }
-  else if (argc == 1){
-    printf("You must enter a number indicating the size you want the Tic Tac Toe board to be.\n");
-    exit(EXIT_FAILURE);
+    int num_args_read;
+    num_args_read = sscanf(argv[1], "%d ", game_board_size);
+    if (num_args_read == 1){
+      if (*game_board_size <= 0){
+        printf("ERROR! The game board size must be greater than 0. \n");
+        exit(EXIT_FAILURE);
+      }
+    }
+    else{
+      printf("ERROR! The game board size you entered must be an integer number. \n");
+      exit(EXIT_FAILURE);
+    }
   }
   else{
-    printf("You entered too many arguments. There should only be one argument indicating the size of the board.\n");
+    printf("You should only input 2 arguments: The dimensions of the board and the character you want to serve as the character in each blank space.\n");
+    printf("Ending program\n");
     exit(EXIT_FAILURE);
   }
 }

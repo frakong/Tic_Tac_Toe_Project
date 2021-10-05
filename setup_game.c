@@ -43,7 +43,7 @@ void fetch_game_board_size(int argc, char** argv, int* game_board_size){
     }
   }
   else{
-    printf("You should only input 2 arguments: The dimensions of the board and the character you want to serve as the character in each blank space.\n");
+    printf("You should only input 1 argument: The dimensions of the board\n");
     printf("Ending program\n");
     exit(EXIT_FAILURE);
   }

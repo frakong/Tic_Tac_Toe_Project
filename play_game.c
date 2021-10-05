@@ -49,8 +49,8 @@ void display_board(char** game_board, int game_board_size){
 void get_move_from_player(char** game_board, int game_board_size, int current_turn, int* move_row, int* move_col, char blank_character){
   int num_args_read;
   printf("Player %d, please type in your move in the following format: row# col#\n", current_turn+1);
-  printf("Remember, your row# and col# must be between 0 and %d\n", game_board_size-1);
   do{
+    printf("Remember, your row# and col# must be between 0 and %d: ", game_board_size-1);
     num_args_read = scanf("%d %d", move_row, move_col);
   } while(!is_move_valid(num_args_read, game_board, game_board_size, *move_row, *move_col, blank_character));
 }

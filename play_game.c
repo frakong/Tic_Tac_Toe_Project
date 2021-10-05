@@ -7,19 +7,19 @@
 #include "play_game.h"
 
 //Main function for playing the game. Starts out by displaying a welcome message, then continues to read in moves inputted by the player, update the board, display the board, and change turns until either someone has won or there is a tie. Finally, it declares the results of the game. 
-void play_game(char*** game_board, char* game_pieces, int game_board_size, int* current_turn, char blank_character){
+void play_game(char** game_board, char* game_pieces, int game_board_size, int* current_turn, char blank_character){
   int move_row, move_col;
-  displayWelcomeMessage(*game_board, game_board_size);
+  displayWelcomeMessage(game_board, game_board_size);
   do{
-    get_move_from_player(*game_board, game_board_size, *current_turn, &move_row, &move_col, blank_character);
+    get_move_from_player(game_board, game_board_size, *current_turn, &move_row, &move_col, blank_character);
     update_board(game_board, game_pieces, move_row, move_col, *current_turn);
-    display_board(*game_board, game_board_size);
-    if (!is_game_over(*game_board, game_board_size, blank_character)){
+    display_board(game_board, game_board_size);
+    if (!is_game_over(game_board, game_board_size, blank_character)){
       change_turn(current_turn);
     }
-  } while (!is_game_over(*game_board, game_board_size, blank_character));
+  } while (!is_game_over(game_board, game_board_size, blank_character));
   //When we exit the do-while loop, if a player has won, the current turn will be that player.
-  declare_results_of_game(*game_board, game_board_size, blank_character, *current_turn);
+  declare_results_of_game(game_board, game_board_size, blank_character, *current_turn);
 }
 
 //Displays the initialized board and a welcome message to signify the beginning of the game.
@@ -128,8 +128,8 @@ bool in_range(int move_row, int move_col, int game_board_size){
 }
 
 //Changes the entry at row move_row, column move_col on the board to the current player's piece.
-void update_board(char*** game_board, char* game_pieces, int move_row, int move_col, int current_turn){
-  *game_board[move_row][move_col] = game_pieces[current_turn];
+void update_board(char** game_board, char* game_pieces, int move_row, int move_col, int current_turn){
+  game_board[move_row][move_col] = game_pieces[current_turn];
 }
 
 //Changes the player whose turn it is to make a move. Right now, I assume there are only two players. In the future, I might modify this function so there can be more players.

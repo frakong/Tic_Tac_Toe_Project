@@ -21,7 +21,7 @@ int main(int argc, char** argv){
   
 
   setup_game(argc, argv, &game_board, &game_pieces, &game_board_size, &current_turn, blank_character);
-  play_game(&game_board, game_pieces, game_board_size, &current_turn, blank_character);
+  play_game(game_board, game_pieces, game_board_size, &current_turn, blank_character);
   cleanup_game(game_board, game_pieces, game_board_size);
   return 0;
 }

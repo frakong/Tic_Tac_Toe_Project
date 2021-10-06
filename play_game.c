@@ -38,6 +38,7 @@ void display_board(char** game_board, int game_board_size){
     }
     printf("\n");
   }
+  printf("\n");
   printf("   ");//First column of board will be printed after 3 spaces.
   for (int last_line_position = 0; last_line_position < game_board_size; last_line_position++){
     printf("%d ", last_line_position);//write out the column numbers.
@@ -58,11 +59,13 @@ void get_move_from_player(char** game_board, int game_board_size, int current_tu
 //Checks to see if the input the user typed in to make the move is of a valid format, then checks whether the spot on the board contains a blank character and whether the numbers entered in are within the size of the game board.
 bool is_move_valid(int num_args_read, char** game_board, int game_board_size, int move_row, int move_col, char blank_character){
   if (isMoveFormatValid(num_args_read)){
-    if (spot_taken(game_board, move_row, move_col, game_board_size, blank_character)){
+    if (in_range(move_row, move_col, game_board_size)){
+      if (spot_taken(game_board, move_row, move_col, game_board_size, blank_character)){
       printf("That spot already has a player piece on it. Please choose a spot that contains the blank character (an 'e')\n");
       return false;
+      }
     }
-    if (!in_range(move_row, move_col, game_board_size)){
+    else{
       printf("The row and column number you entered is out of range of the size of the game board. Please make sure your row and column numbers are between 0 and %d\n", game_board_size-1);
       return false;
     }
